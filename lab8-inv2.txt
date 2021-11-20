@@ -1,0 +1,36 @@
+Part 1
+
+on centos3
+
+cat /var/lib/dhcpd/dhcpd.leases
+
+On centos1
+
+ls /var/lib/dhclient
+
+if required 
+dhclient eth0
+
+cat /var/lib/dhclient/dhclient.leases
+
+
+Part 2
+
+on centos3
+
+vi /etc/dhcp/dhcpd.conf
+
+host centos1 {
+	hardware ethernet 52:54:00:60:a8:98;
+	fixed-address 192.168.235.42;
+}
+
+Restart dhcpd
+systemctl restart dhcpd
+
+on centos1
+
+ifdown eth0
+ifup eth0
+
+ifconfig

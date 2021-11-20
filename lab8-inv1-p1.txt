@@ -1,0 +1,37 @@
+DHCP
+
+Dynamic Host Configuration Protocol
+
+Service to configure network hosts with IP address, Subnetmask
+Default Gateways, DNS etc.
+
+Configuration information is leased to a client for a certain period after which if it is not renewed it expires.
+
+Much easier way of managing networks and clients than statically configured hosts.
+IP address management, and troubleshooting implications.
+Critically important for protable devices.
+
+Static hosts still have place.
+
+In lab 6 we statically configured all of our VM's to connect to the same Virtual Network using fixed addresses.
+
+In this lab we will configure one of our hosts to be a DHCP server to provide configuration to the other VM's
+
+The initial DHCP lease process consists of 4 BROADCAST packets between the dhcp client and the dhcp servers.
+Discover
+Offer (reserved from available address pools)
+Request
+Acknowledge (lease expiry, and other config)
+
+Part 1. Installation
+
+Launch c7host and centos3
+In centos3
+rpm -qa dhcp
+yum install dhcp
+To list files
+rpm -qla dhcp 
+cat /etc/dhcp/dhcp.conf
+cp /usr/share/doc/dhcp*/dhcpd.conf.example /etc/dhcp/dhcpd.conf
+
+
