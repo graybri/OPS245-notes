@@ -1,0 +1,62 @@
+In this video we will be learning about sshd
+
+
+This lab will require that you are connected to Seneca's VPN service on your windows c7host
+
+Start c7host, centos1, centos2, centos3
+
+$ sudo virsh start centos1
+$ sudo virsh start centos2
+$ sudo virsh start centos3
+
+In c7host
+Make a file in your home directory called myfile.txt that contains some text
+
+$ ls > myfile.txt
+
+*** Connect to VPN!!! ***
+
+copy myfile.txt to your regular matrix account
+
+$ scp myfile.txt brian.gray@matrix.senecacollege.ca:~
+
+scp copies files across a network securely tunneling through ssh
+
+$ ssh brian.gray@matrix.senecacollege.ca
+
+Uses ssh to connect to a remote host and receive a remote terminal shell
+
+We can also use ssh to run single command on the remote host instead of a interactive shell
+
+$ ssh brian.gray@matrix.senecacollege.ca ls ~
+Note problem with local bash using ~
+$ ssh brian.gray@matrix.senecacollege.ca "ls ~"
+or:
+$ ssh brian.gray@matrix.senecacollege.ca ls /home/brian.gray
+$ ssh brian.gray@matrix.senecacollege.ca "cat ~/myfile.txt"
+
+To establish an ssh connection you require an ssh service/daemon/server (sshd) installed on the remote host and an ssh client program installed on the local host. (ssh, scp, sftp)
+
+In most linux installations both the ssh server and client are installed by default.
+To check what packages were installed
+
+$ rpm -qa | grep ssh
+
+Both a client and a server is installed.
+What packages were used?
+
+openssh-server installs a service called sshd
+
+$ sudo systemctl status sshd
+
+What ports does the sshd service use?
+$ ss -atunp
+$ ss -atunp | grep sshd
+$ ss -atup
+
+grep ssh /etc/services
+
+Confirm sshd is running on 3 VM's by establishing a connection
+$ ssh bgray@centos1
+$ ssh bgray@centos2
+$ ssh ops245@centos3

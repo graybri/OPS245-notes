@@ -1,0 +1,76 @@
+From centos3
+login as ops235
+su -
+netstat -atunp | grep sshd
+
+ssh ops235@centos3
+
+Message explanation
+yes
+
+hostname
+cat ~/.ssh/known_hosts
+su -
+nestat -atunp | grep sshd
+
+See established
+exit 
+exit
+netstat -atunp
+see TIME_WAIT
+
+
+If receive fingerpint error
+Investigate cause
+
+If clear 
+vi ~/.ssh/known_hosts
+delete line
+ssh ops235@centos3
+Accept new fingerprint
+
+Configuring ssh to use PKI keys
+
+Used for user Authentication and Host fingerprints
+Public/Private keypair encryption.
+Used for both privacy and authentication
+Asymmetrical encryption.
+2 keys are generated (aka a keypair)
+Public key 
+Private key
+Both are required.
+When we encrypt using Public Key, only the Private Key can decrypt. (Privacy)
+
+When encrypt using Private Key, only the Public Key can decrypt.
+(Authentication)
+
+
+
+Setup Public key Authentication
+In centos2 as REGULAR USER
+
+ssh-keygen
+accept filenames
+add passphrase
+
+Copy public key to centos3
+ssh-copy-id -i ~/.ssh/id_rsa.pub ops235@centos3
+Enter password
+
+ssh ops235@centos3
+enter passphrase
+
+cat .ssh/authorized_keys
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+Hackers know that port 22 is commonly open
+They also know the root account name.
+
+This makes ssh a target of attack, all that is required is the password.
+Brute force attacks could be used.
+
+2 things can make this harder
+Use a non default port number for ssh
+Disable root login over ssh
+
+On centos1
+
+open terminal 
+su -
+
+vi /etc/ssh/sshd_config
+
+examine file
+
+uncomment and set to no
+#PermitRootLogin no
+
+add
+AllowUsers bgray
+
+Restart sshd
+systemctl restart sshd
+
+On c7host
+ssh root@centos1
+ssh bgray@centos1
+
+On centos1
+useradd -m other
+passwd other
+
+on c7host
+ssh other@centos1
+
+on centos1
+vi /etc/ssh/sshd_config
+add other to AllowUsers
+
+systemctl restart sshd
+
+on c7host
+ssh other@centos1
+then
+sudo ls /etc/
+su -
+
+less /var/log/secure
+ssh connections logins
+su usage
+sudo usage
+
+grep sudo: /var/log/secure
+grep su: /var/log/secure
+
+
+
+
+ 

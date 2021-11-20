@@ -1,0 +1,97 @@
+PART 1
+
+iptables is a tool that povides an interface to configure up chains of policy rules 
+
+There are 3 commonly used chains INPUT OUTPUT and FORWARD
+
+The INPUT chain contains rules and a default policy for any network traffic that is being received by the host.
+
+The OUTPUT chain contains rules and a default policy for any network traffic being sent by the host.
+
+The FORWARD chain contains rules and a default policy or any network traffic that is being routed between networks the host is connected to.
+Typically FORWARD is used on devices that are functioning as Routers on the network
+
+Chain.png and Chain.pdf
+
+On c7 host
+
+iptables -L Describe output
+iptables -L -v
+
+iptables -L INPUT
+
+To "flush" or delete the chains of rules
+
+iptables -F
+or
+iptables -F OUTPUT
+
+PART 2
+
+To change a default policy
+iptables -P INPUT DROP 
+iptables -L
+
+Firefox to google
+
+iptables- P INPUT ACCEPT
+
+Firefox to google
+iptables -P INPUT DROP 
+
+REFER to Lab 7 page
+To add a rule:
+Where in the chain? order is important
+
+-A append to end
+-I insert as first rule
+-I INPUT 5 insert as rule #5 in INPUT chain
+
+Which chain?
+INPUT OUTPUT FORWARD "custom chain"
+
+Which protocol?
+-p tcp or udp or icmp or all
+-p 
+cat /etc/protocols
+
+Source and Destination Address/Network? 
+-s Source IP addr
+-d Destinaton IP addr
+
+Source and Destination ports ?
+--sport 22 
+--dport 80
+Port numbers from /etc/services
+
+Target (action to be taken)
+-j ACCEPT or DROP or REJECT or LOG
+
+Other things like TCP state 
+
+iptables -A INPUT -i lo -p all -j ACCEPT
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+Test firefox to google
+
+SKIP STEPS 9 - 16
+
+restart c7host
+
+as root
+iptables -L
+
+Part 3
+iptables -F
+iptables -P INTPUT ACCEPT
+
+cat /etc/sysconfig/iptables
+
+cp /etc/sysconfig/iptables /etc/sysconfig/iptables.bk
+iptables-save > /etc/sysconfig/iptables
+
+restart c7host
+
+
+
+

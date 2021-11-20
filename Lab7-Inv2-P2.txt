@@ -1,0 +1,10 @@
+On c7host
+
+as bgray
+
+ssh -X -C bgray@centos1
+
+gedit
+
+ps x on both
+
