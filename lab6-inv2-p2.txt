@@ -1,0 +1,65 @@
+In this video we will review the TCP/IP protocol stack and learn to gather information about our configuration and connectivity
+
+Review both TCP/IP Model images
+
+Troubleshooting and testing network configuration and network services is best done with the TCP/IP architecture in mind and the first step is to understand the protocols and how they work.
+
+Problems using services across a network are not necessarily due to network problems but instead be caused by service configuration issues
+
+On c7host
+
+$ ping centos1
+$ ping centos2
+$ ping centos3
+
+This verifies that IP and hostname resolution is working
+It also means that we successfully resolved the 32 bit IP address to the 48 bit HWaddress or MAC address.
+
+explain arp protocol
+explain arp cache
+
+$ ping centos1
+$ ping centos2
+$ ping centos3
+
+$ arp
+$ arp -n
+
+Transport --> Application
+Ports and Sockets
+
+TCP v UDP
+
+ss command replaces older netstat command.
+
+$ ss -at
+$ ss -au
+$ ss -atn
+$ ss -aun
+
+
+Explain /etc/services 
+$ less /etc/services
+IANA
+
+Well known ports
+Must run as root
+
+$ ps -ef | grep "sshd"
+
+From centos2
+$ ssh bgray@c7host
+
+From c7host
+$ ss -at
+$ ss -atn
+$ ps -ef | grep "sshd"
+
+ESTABLISHED
+
+From centos2
+$ exit
+
+From c7host
+$ ss -at
+CLOSE_WAIT
