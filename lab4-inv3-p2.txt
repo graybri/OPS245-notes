@@ -1,0 +1,95 @@
+In this video we will be discussing what are now called system targets.
+System targets are very similar to what we used to call runlevels.
+
+System targets (and runlevels) are a preconfigured state of system services
+Some services would be started as part of that target and other services would be stopped
+
+System targets generally reflect the level of functionality that is enabled.
+
+System targets are controlled by the first initial process to start after booting called systemd 
+
+The job of systemd is to control the startup and shutdown of all of the other processes on the system.
+
+Processes like a file system are hierarchical. That is there is a root process that starts other processes(services) which then may start their own child processes.
+systemd is the original parent process
+
+We uses the systemctl command to control systemd
+
+The older initial process was called initd. It served a similar purpose but was less powerfull than the newer systemd that replaced it.
+
+When we were using initd we referred to these preconfigured states of system services as runlevels.
+
+
+Lets examine the most commonly used system targets and their similar older initd runlevels.
+
+Refer to slide
+
+Our system is configured with a default target to be used at boot time
+But we can change our current target and also change the default boot target
+
+In centos1
+ps -ef | less
+
+PID 1 systemd 
+
+sudo systemctl get-default
+
+in centos3
+
+sudo systemctl get-default
+
+Why are they different?
+
+We can change the current target 
+
+in centos1 
+sudo systemctl isolate multiuser.target
+
+Shuts down the graphical user interface services (X11)
+
+Reboot centos1
+sudo systemctl isolate reboot.target
+
+Reboots into graphical.target (default)
+
+To change the default target (boot target)
+
+sudo systemctl set-default multi-user.target
+
+reboot centos1
+sudo systemctl isolate reboot.target
+
+Boots into text based target (No GUI)
+
+sudo systemctl isolate graphical.target
+Start GUI
+To change default startup target back to graphical
+sudo systemctl set-default graphical.target
+
+
+On centos3 
+
+sudo systemctl isolate graphical.target
+
+No GUI installed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

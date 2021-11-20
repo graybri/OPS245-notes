@@ -1,0 +1,61 @@
+Installing the nested VM's
+
+Reminder that naming things correctly is very important.
+Keep root passwords, user accoung names and password the same across the VM's
+ 
+Installing from the network with gnome GUI
+VMname centos1
+Network Installation
+
+Network Install URL
+https://mirror.netflash.net/centos/7/os/x86_64/
+
+VM image filename /var/lib/libvirt/images/centos1.qcow2
+Memory: 2048MB
+Disk space: 15GB
+CPU's: 2
+
+Launch Virtual Machine Manager
+enter password
+
+Click create a new VM Icon
+Select network Install option
+Forward 
+RAM 2048M forward
+Disk Space 15G forward
+
+name: centos1 
+Select Customize Configuration before install 
+finish
+
+Click CPU's --> Configuration --> Copy host CPU configuration --> Apply
+Begin installation
+
+During install 
+Software Selection Gnome Desktop
+Partitioning I will configure partition settings --> done
+Click here to create them automatically
+Change / partition to ext4 filesystem
+Set Date and time zone
+Network and hostname : turn on network and enter centos1 as hostname --> done
+
+Create user account and password (same as c7host) check to make it administrator
+Set root password (same)
+
+Complete installation and login as user
+disable, stop and uninstall firewalld
+
+install, enable and start iptables
+
+turn off selinux /etc/selinux/config
+Perform a system update
+reboot
+
+Record your ipaddress
+
+
+
+
+
+
+

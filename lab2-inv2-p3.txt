@@ -1,0 +1,67 @@
+Installing the nested VM's
+
+Reminder that naming things correctly is very important.
+Keep root passwords, user accoung names and password the same across the VM's
+ 
+Installing from the network using a kickstart file
+VMname centos3 
+Network Installation w kickstart
+
+Discussion of what a kickstart file is,
+
+Network Install URL
+http://mirror.netflash.net/centos/7/os/x86_64/
+
+Kickstart file
+ ops245
+
+VM image filename /var/lib/libvirt/images/centos3.qcow2
+Memory: 2048MB
+Disk space: 15GB
+CPU's: 2
+
+Launch Virtual Machine Manager
+enter password
+
+Click create a new VM Icon
+Select network Install option
+Enter URL for installation 
+Click url options
+add ks=https://ict.senecacollege.ca/~ops245/labs/centos7-kickstart.cfg
+
+**important to add ks=
+
+Forward 
+RAM 2048M forward
+Disk Space 15G forward
+
+name: centos3
+Select Customize Configuration before install 
+finish
+
+Click CPU's --> Configuration --> Copy host CPU configuration --> Apply
+Begin installation
+
+
+While installing...
+examine the ks  link and read through it reading the comments
+
+Look for Root password, user name and user password
+
+Complete installation and login as user
+
+disable, stop and uninstall firewalld
+install, enable and start iptables
+
+turn off selinux /etc/selinux/config
+Perform a system update
+reboot
+
+Record your ipaddress
+
+
+
+
+
+
+

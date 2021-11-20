@@ -1,0 +1,37 @@
+In this video we will completing Lab 5 - Investigation 3
+We will be improving our monitor-disk-space.py script to make it more flexible and useful.
+
+In c7host make a copy of monitor-disk-space.py and call it disk-monitor.py in your ~/bin directory
+
+Add comments reflecting the change that you are about to make.
+We should always record maintenance and revision on the script in the comments.
+It provides documentation through the life of the script.
+
+$ vi disk-monitor.py
+Step through code
+
+# Revised by Brian Gray
+# Nov 10/2021
+# Added argpass and the use of command arguements to make the script interactive
+
+import os
+import argparse
+
+parser=argparse.ArgumentParser(description='Emails alerts on mounted filesytems')
+
+parser.add_argument('-a', '--alert', help='Usage alert threshold', type=int)
+parser.add_argument('-u', '--user', help='User to email')
+
+args=parser.parse_args()
+
+#The local email account to send notifications to
+if args.user:
+  admin=args.user
+else:
+  admin="bgray"
+
+#The percentage use at which notifications will be sent
+if args.alert:
+  alert=args.alert
+else:
+  alert=10

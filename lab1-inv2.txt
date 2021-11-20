@@ -1,0 +1,81 @@
+Using VMware to manage VM
+
+ALT-CTRL-ENTER to toggle between full screen and windowed mode
+
+VMware toolbar at the top can be hidden
+
+alt-ctrl to focus keyboard and mouse back to host windows
+
+Show how to create desktop short cuts
+firefox
+files 
+terminal
+
+Configure display
+
+open lab in firefox
+
+https://wiki.cdot.senecacollege.ca/wiki/OPS245
+
+CTRL-d to bookmark it
+
+Open terminal and arrange screen
+
+Warning if you are using external SSD
+
+Turn off the screen saver
+
+Click power -- > settings --> power
+I set mine to never
+Close settings
+
+Accessing Administrative priviliges
+Discussion of su vs sudo
+demo su and su -
+whoami
+less /var/log/anaconda/packaging.log
+demo sudo
+
+sudo less /var/log/secure
+sudo access can be controlled and is not given to most users.
+We selected "Make this user Administrator" when creating this account
+
+anaconda is installation program it creates the packaging.log file to record what it installed 
+
+use sudo and grep to find out how many packages were done
+sudo grep -i packaging /var/log/anaconda/packaging.log | wc -l
+
+Turning off SELinux
+
+Not to be done in real life*********
+Security Enhanced Linux
+Controls access of software beyond simple filesystem permissions. Not covered in this course
+
+sudo vi /etc/selinux/config
+set SELINUX to permissive
+save file and reboot
+
+to check status:
+sestatus
+getenforce
+
+Perform software updates
+Installed from DVD source but many updates have been released since that DVD image was created.
+
+We need to install updates using a command call yum
+YellowDog Update Manager
+
+sudo yum update 
+
+Periodically we should perform updates on all of our VM's to keep them in top shape.
+If the kernel is updated then a reboot will be required
+
+Old kernel will still be available in boot loader (grub) menu
+
+
+
+
+
+
+
+

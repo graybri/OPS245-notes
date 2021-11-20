@@ -1,0 +1,35 @@
+Lab 1 Investigation 4
+
+Writing a python script to automate the execution of our commands to gather system info into a report
+
+First install python3
+sudo yum -y install python3
+
+change to bin
+cd ~/bin
+vi myreport.py
+
+Add the correct sh-bang line
+Add comments to document the script
+
+To work with the Operating system
+
+import os
+
+print title 
+Use os.system('command') to display output of command
+Use of blank lines for readability
+
+Use of os.popen('command') to save command output to a variable of a custom datatype
+
+Use of print(variable.read()) to display contents of variable
+
+Save and exit
+
+./myreport.py > pythonreport.txt
+
+
+cat pythonreport.txt
+
+
+

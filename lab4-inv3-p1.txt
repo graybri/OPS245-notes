@@ -1,0 +1,25 @@
+In this video we will be learning to manage individual system services
+We have previously performed these types of tasks when setiing up the iptables service
+
+
+In general from a security pespective it is worth while examining the services running on our system on a normal basis.
+Geneally you want to make sure that each service running is actually required and disable those that aren't
+Each service running gives hackers a point of attack. 
+Reducing services reduces points of attack.
+
+We manage system services using the systemctl command
+
+In centos1
+
+
+sudo systemctl status iptables
+sudo systemctl disable iptables
+sudo systemctl stop iptables 
+sudo systemctl status iptables
+
+sudo systemctl enable iptables
+sudo systemctl status iptables
+sudo systemctl start iptables 
+
+
+

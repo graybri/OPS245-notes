@@ -1,0 +1,73 @@
+Part 2
+
+In this video we will be covering the tasks in Lab4 investigation 1 Part 2
+Which will involve creating, modifying, and deleting user accounts 
+
+In centos1 
+
+To add a user account we use the command useradd
+and then set their initial password using the passwd command
+
+man useradd
+
+sudo useradd ops245_1
+sudo passwd ops245_1
+
+grep ops245_1 /etc/passwd
+ls /home
+Home directory was created automatically
+Not all Linux systems will do this by default
+
+explain -m
+
+sudo useradd -m ops245_2
+sudo passwd ops245_2
+
+ls /home
+
+To delete (remove) a user account we use the userdel command
+
+sudo userdel ops245_2
+grep ops245 /etc/passwd
+ls /home
+home dir not removed by default
+
+sudo rm -rf /home/ops245_2
+
+Use -r option to remove the users home directory at the same time.
+sudo userdel -r ops245_1
+ls /home
+
+Recreate ops245_1 
+
+sudo useradd -m ops245_1
+sudo passwd ops245_1
+
+sudo ls -a /home/ops245_1
+
+Where do the initial contents of the users home directory come from?
+What if we want add files and directories automatically to a new users home directory?
+
+There is a directory that acts as a tenplate for a new users home directory.
+ls -a /etc/skel
+
+We can add to that template
+sudo touch /etc/skel/foo
+sudo mkdir /etc/skel/policies
+sudo useradd -m ops245_2
+sudo passwd ops245_2
+ls -a /home/ops245_2
+
+To create a user account that expires
+man useradd 
+look and explain -e
+
+To modify users after created we can use the usermod and chage commands
+man usermod
+sudo usermod -c "New Name" ops245_2
+grep "ops245" /etc/passwd
+
+man chage
+sudo chage -l ops245_1
+sudo chage -E 2021-12-31 ops245_1
+sudo chage -l ops245_1

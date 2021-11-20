@@ -1,0 +1,21 @@
+Lab 2 Investigation 3 Part 3
+
+we will learn to manage our 3 VM's by using the virsh command
+
+Start the 3 VM's 
+
+In c7host
+sudo virsh list
+sudo virsh list --all
+sudo virsh list --inactive
+
+shutdown centos1 normally
+
+sudo virsh start centos1
+sudo virsh list
+
+sudo virsh shutdown centos3
+
+
+
+

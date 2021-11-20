@@ -1,0 +1,54 @@
+In investigation 3 we will learn to manage our virtual machines.
+
+Including backing them up, restoring them, and manipulating them from the command line
+
+Shutdown the 3 VM's
+
+sudo shutdown -h now
+
+in c7host
+
+sudo -i
+
+
+Examine the contents of /var/lib/libvirt/images
+
+mkdir ~bgray/backups
+
+Notice use of redirection to make a compressed backup of disk image files
+Depending on the size of the file this may take some time
+
+gzip < centos1.qcow2 > ~bgray/backups/centos1.qcow2.gz
+gzip < centos2.qcow2 > ~bgray/backups/centos2.qcow2.gz
+gzip < centos3.qcow2 > ~bgray/backups/centos3.qcow2.gz
+
+compare the size of backups to originals
+
+ls -lh /var/lib/libvirt/images
+ls -lh ~bgray/backups
+
+exit to return to regular user
+
+start centos3
+login as ops245
+
+wreck it
+sudo rm -rf /*
+
+shutdown and restart to see it is broken
+force off
+
+restore disk image
+gunzip < ~bgray/backups/centos3.qcow2.gz > /var/lib/libvirt/images/centos3.qcow2
+
+restart the VM
+
+Also important to backup the VM definition/configuration
+
+sudo virsh dumpxml centos3
+sudo virsh dumpxml centos3 > ~bgray/backups/centos3.xml
+
+This can be used later to restore the VM configuration in kvm.
+We will see this done in Part 2
+
+

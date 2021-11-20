@@ -1,0 +1,33 @@
+VMM
+all VM's off
+
+VMM --> Edit --> Connection details --> Virtual Networks
+
+Deselect Auto Start
+Click Apply
+
+Click on Stop to Default Network
+
+Click on Add +
+network1 -- > Forward
+
+192.168.245.0/24
+Disable DHCP
+
+Forward
+forward
+
+Select Forwarding to physical network,
+Destination: Any physical device
+Mode NAT
+
+Finish
+
+Then add all VM's to network1
+
+Open VM, View --> Details
+Network Source: virtual Network "network1" NAT
+
+Apply
+
+ip address

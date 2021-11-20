@@ -1,0 +1,75 @@
+
+Part 3
+
+Managing Groups
+
+Groups are used to control permissions
+Create a group and add members to the group
+Assign permissions to the group
+Prevents having to assign permisions to many individual users
+
+In centos1
+
+
+switch user in GUI to New Name
+open terminal 
+touch information.txt
+ls -l 
+who owns the file
+
+sudo groupadd -g 5000 welcome
+sudo fails
+
+Switch user to bgray
+sudo groupadd -g 5000 welcome
+sudo groupadd -g 5001 secondary
+cat /etc/group
+
+man usermod 
+look for -g option to change primary group
+also -aG to add to secondary group
+
+sudo usermod -g welcome ops245_1
+sudo usermod -g welcome ops245_2
+sudo usermod -aG secondary ops245_1
+sudo usermod -aG secondary ops245_2
+cat /etc/passwd
+cat /etc/group
+sudo ls -l /home/ops245_1
+
+Switch to ops245_1
+ls -l
+chgrp secondary information.txt
+ls -l
+
+
+Practical Example
+
+Management has sent you (the Linux systadmin) that a "new" employee has been hired and will be on on probation for 3 months. As the Linux system administrator, they want you to perform the following steps:
+
+
+
+sudo useradd -m -e 2021-12-31 -g welcome noobie
+sudo passwd noobie
+sudo usermod -aG secondary noobie
+sudo usermod -c "Really Green" noobie
+cat /etc/group
+
+
+Unfortunately, you were later informed that this "noobie" employee was caught stealing from the company. They want you to perform the following operations:
+
+sudo userdel noobie
+grep noobie /etc/passwd
+ls /home
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+centos3
+Verify details of VM
+
+Already connected to Virtual Network network1
+**Make note of HWADDR**
+
+Start centos3
+ip address
+eth0 not configured
+**Make note of HWADDR**
+
+to configure
+
+$ sudo -i
+$ cd /etc/sysconfig/network-scripts
+$ ls
+See network configuration scripts and network configuration files
+
+$ vi ifcfg-eth0
+DEVICE=eth0
+IPADDR=192.168.245.13
+PREFIX=24
+GATEWAY=192.168.245.1
+HWADDR=xx:xx:xx:xx:xx:xx <-- # Use YOUR centos3 VM's MAC ADDRESS!!!
+DNS1=192.168.245.1
+BOOTPROTO=static
+ONBOOT=yes
+NM_CONTROLLED=yes
+IPV6INIT=no
+
+Save and quit
+
+$ ifdown eth0
+$ ifup eth0
+
+$ ip address
+$ ip route
+$ nslookup
+-> server
+
+Ping c7host and centos1 IP's
+*** CONNECT SENECA VPN ***
+ssh brian.gray@matrix.senecacollege.ca
+
+Repeat centos2
+
+vi ifcfg-eth0
+
+DEVICE=eth0
+IPADDR=192.168.245.12
+PREFIX=24
+GATEWAY=192.168.245.1
+HWADDR=xx:xx:xx:xx:xx:xx <-- # Use YOUR centos2 VM's MAC ADDRESS!!!
+DNS1=192.168.245.1
+BOOTPROTO=static
+ONBOOT=yes
+NM_CONTROLLED=yes
+IPV6INIT=no
+
+Save and quit
+
+$ ifdown eth0
+$ ifup eth0
+
+$ ip address
+$ ip route
+$ nslookup
+-> server
+
+Ping c7host and centos1 and centos3 IP's
+*** CONNECT SENECA VPN ***
+ssh brian.gray@matrix.senecacollege.ca

@@ -1,0 +1,18 @@
+
+In this lab we will be learning to manage user and group accounts,
+Give users access to sudo
+Manage system services and system targets (formerly known as runlevels)
+
+We will also extend our python knowledge to parse command line arguments.
+
+Investigation 1 User/Group Management
+
+Part 1 
+
+Demo /etc/passwd and /etc/shadow
+In centos1
+less /etc/passwd
+man 5 passwd
+examine root account
+examine system accounts
+examine user accounts

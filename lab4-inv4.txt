@@ -1,0 +1,35 @@
+In this video I will be demonstrating how to take the interactive script that we created in Lab3 to archive a directory, and turn it in to a non interactive script that uses argparse to parse command line arguments to accomplish the same thing.
+
+vi lab3.py 
+Examine script to see what changes need to be made
+We will need to remove all code that prompts for input
+We will need to remove any loops that are used to validate user input
+
+
+We will need to add argparse code to accept command line arguments in place of user input
+
+Demo
+./lab3.py
+
+vi lab4.py
+import argparse
+instantiate the parser object adding a command description
+
+Add positional arguments (required) for dirname and archname
+
+Add a mutually exclusive group to accept an option for 1 of the 3 compression methods
+
+If no option is supplied create the archive without compression
+Check the Boolean value of the options to see which to use
+
+
+demo
+
+./lab4.py
+See the options group
+./lab4.py -h
+./lab4.py ~/bin/tmp test
+Creates archive with no compression
+./lab4.py -b ~/bin/tmp test
+Creates archive with bzip compression
+

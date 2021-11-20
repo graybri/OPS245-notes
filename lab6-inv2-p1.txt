@@ -1,0 +1,42 @@
+In this video we will be configuring our new virtual network with hostname Resolution
+
+IP networks function by using 32 bit IP addresses to identify a computer on the network.
+As humans we will remember names much more easily than numbers so we use hostname and fully qualified domain names to identify computers on the network.
+This means that we must have a way of resolving (translating) a hostname to an ip address.
+This can be accomplished using an Internet Service called dns
+Domain Name Service
+
+DNS consists of a distributed database of FQDN - IP addresses for all registered hosts on the Internet.
+
+## Show Slide
+Example of host www.example.com registered with the DNS server that is authoritative for the domain example.com
+
+Discuss recursive-iterative queries and caching
+
+On our virtual network our hosts are NOT registered with an authoritative name server, so we must set up local /etc/hosts files to do name Resolution
+
+
+from c7host
+ping by ip
+ping by name
+
+$ cat /etc/hosts
+$ cat /etc/resolv.conf
+
+on c7host
+$ vi /etc/hosts
+
+192.168.245.1	c7host centosmain
+192.168.245.11	centos1
+192.168.245.12	centos2
+192.168.245.13	centos3
+
+$ ping centos1
+$ ping centos2
+$ ping centos3
+
+$ scp /etc/hosts root@centos1:/etc/
+$ scp /etc/hosts root@centos2:/etc/
+$ scp /etc/hosts root@centos3:/etc/
+
+demo connection from centos2

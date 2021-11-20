@@ -1,0 +1,225 @@
+
+Intro to installing c7host
+take good notes
+
+VMware should already been installed
+
+Check hardware requirements
+
+Windows settings --> system --> about
+
+Download CentOS 7 installation DVD iso
+
+Start Vmware workstation
+
+Edit preferences --> default location for virtual machines
+
+
+if ssd format exfat
+also enable virtualization in BIOS VT-X and VT-D is available
+
+Create new virtual machine --> Custom -- Next
+
+Select correct version of vmware for compatability
+
+next
+
+I will install the operating system later should be selected.
+
+next  
+
+Select Linux as Guest operating system 
+Version Centos 7 64 bit
+
+next
+
+VM Name c7host
+Location correct (below what was set in preferences)
+
+next 
+
+processors 1
+
+Because this VM will be nesting other VM's we want to assign multiple cores
+Cores 4
+
+next
+
+Configure memory for VM
+c7host needs a lot because it will be running multiple nested VM's
+Set to 8192 MB
+
+This takes 8G from your RAM leaving windows with the remainder
+
+next
+
+Nework type is NAT (default)
+next
+
+I/O controller
+LSI Logic (default)
+
+next
+
+Virtual Disk type 
+SCSI (default)
+
+next
+
+Create a new virtual disk
+
+next
+
+Maximum Disk size
+
+238G 
+
+next
+
+accept disk filename
+
+next
+
+review settings
+
+finish
+
+c7host VM appears in VMware but not yet installed
+
+Before starting the VM we have to edit a few more settings
+
+Edit virtual machine settings (very important)
+Click on options tab
+Click on advanced
+Firmware type UEFI
+
+Click on Hardware tab
+Select CD/DVD
+Select Use ISO image file
+browse for file that you already downloaded
+Select processors
+Select Virtual Intel VT-X/EPT or AMD-VRVI
+and then click OK to save changes
+
+Power on VM
+will boot using centos 7 installation dvd iso image
+
+click on window to grab the VM with your keyboard and choose install centos7
+
+ctrl=alt returns mouse and keyboard back to windows
+
+Leave language as english --> continue
+
+Install summary screen displayed
+We will change some of these items to cutomize our install
+
+Select Date and time
+click on toronto
+
+Click done
+
+Select Software selection
+Select Gnome Desktop --> Done
+
+Select Network and Hostname
+accept default Ethernet connection and turn it on
+In the bottom left enter a hostname of c7host ** ** **
+Click apply 
+Click done
+
+Select Installaion Detination to manually configure partitions
+Click I will configure partioning and click done
+
+We now create our mount points
+
+Click on plus to add a mount point
+Select /boot/efi
+Capacity 2954 
+Add mount point
+Check that Device type is set to standard partiion
+
+Click on plus to add another
+Mount point /boot
+Capacity 500
+Add mount point
+Check that standard partion 
+Filesystem xfs
+
+Click on plus to add another
+Mount point /
+Capacity 30720
+Add mount point
+Check that device type is LVM 
+Change Filesystem to ext4
+
+Click on plus to add another
+Mount point /home
+Capacity 40 x 1024 40960
+Add mount point
+Check that device type is LVM 
+Change Filesystem to ext4
+
+Click on plus to add another
+Mount point type /var/lib/libvirt/images
+Capacity 100 x 1024 102400
+Add mount point
+Check that device type is LVM 
+Change Filesystem to ext4
+
+Click on plus to add another
+Mount point swap
+Capacity 16 x 1024 = 16384 
+Add mount point
+Check that device type is LVM 
+Filesystem swap
+
+
+Double check all mount point settings.
+Mistakes at this point will likely cause problems in future labs
+
+Click Done
+
+Summary of Changes 
+Accept changes
+
+Begin installation
+It will start the install
+click on ROOT password to set the root user password
+click on USER CREATION
+Enter your full name and accept the username
+Make this user adminstrator should be checked
+Click done
+
+USE the same account names and passwords for all of your VM's
+Lab check scripts use this information
+
+Discuss file system types
+
+ext2
+ext3
+ext4
+xfs
+
+ext4 allows for volume shrinkage
+Discuss journalling
+
+When finished Click reboot
+Accept the license agreement -- > Done
+
+Finish configuration
+Click on User name and enter password --> sign in
+Confirm english --> next
+Confirm english US keyboard --> next
+Next
+Skip to skip online accounts
+Start Using CentOS Linux
+
+close getting started
+
+open a web browser and test internet connection
+Quick GNOMe tour
+
+I finished installing for VMware
+
+Conclude
+

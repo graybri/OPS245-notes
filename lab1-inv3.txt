@@ -1,0 +1,98 @@
+Going to learn some bash commands that can be used to get information about the system.
+
+Eventually we will learn to create scripts that can automate these commands to produce a system report
+system administrators often document their system settings
+
+
+try them both as your regular account and using sudo
+
+make notes about what the commands produce as output
+
+uname
+uname -r
+uname -v
+uname -rv
+
+hostname
+ps
+
+Discuss rpm
+Redhat Package Manager
+Maintains databas of information about installed software packages
+
+Can be used install/update/remove software from the system usng package files
+Package files contain all of the files required fo a particular piece of software and instruction where they are to be written.
+Packages may also change some config settings on the system. package files .rpm contain those instructions.
+
+Package files must be located and downloaded first and they may contain a list of dependancies that must be in place before installation. 
+
+Debian based distros use a different packaging system called apt .deb files
+
+rpm records information about packages installed into the rpm database.
+
+We can also use the rpm command to query the database to get valuable information about the software packages installed on the system
+Query with -q option
+rpm -q gedit
+rpm -q -a
+rpm -q -a | wc -l
+rpm -q -l gedit
+
+rpm -q -a -l
+rpm -q -a -l | wc -l
+
+rpm -q -i gedit
+
+Network configuration
+ip is a powerfull command that can display network configuration info and also be used to modify netowrk settings.
+network routing tables can also be seen
+
+previously used iconfig and route commands
+now deprecated but still included and working
+
+ip address show
+ip route show
+show iconfig and route command
+nslookup to test DNS
+interactively or stand alone
+nslookup
+> server
+?
+> exit
+
+nslookup server
+
+nslookup
+> www.senecacollege.ca
+> exit
+
+nslookup www.senecacollege.ca
+
+We can script all of these commands with a bash script that produces a system report.
+We can also create python scripts to do the same task.
+
+In this course we will be learning some python scripting to automate our work.
+In the meantime lets enter a bunch of bash commands to generate a report
+
+mkdir ~/bin
+cd bin
+date +'%A %B %d, %Y (%I:%M %p)'
+date +'%A %B %d, %Y (%I:%M %p)' > report.txt
+echo >> report.txt
+hostname >> report.txt
+echo >> report.txt
+uname -rv >> report.txt
+echo >> report.txt
+ps aux >> report.txt
+echo >> report.txt
+ip address show >> report.txt
+
+You could additional echo commands to add headers and notes
+
+
+
+
+
+
+
+
+

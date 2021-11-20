@@ -1,0 +1,43 @@
+Part 1
+in centos3
+
+cd /usr/share/doc/sudo*
+
+tar cvf /tmp/archive1.tar .
+
+ls -l /tmp
+
+gzip /tmp/archive1.tar 
+
+ls -l /tmp
+
+tar cvzf /tmp/archive2.tar.gz .
+
+ls -l /tmp/a*
+
+Part 2
+in centos3
+
+mkdir /tmp/extract1
+
+cd /tmp/extract1
+
+mv ../archive1.tar.gz .
+
+gunzip archive1.tar.gz
+
+tar xvf archive1.tar
+
+ls -l README /usr/share/doc/sudo*/README
+
+mkdir /tmp/extract2
+
+cd /tmp/extract2
+
+mv /tmp/archive2.tar.gz .
+
+tar xvzf archive2.tar.gz
+
+ls -l
+
+

@@ -1,0 +1,107 @@
+In this video I will be discussing Lab 5 Investigation 2- Part 1
+
+We will managing and reconfiguring our storage on centos2 using Logical Volume Management (LVM) commands to do this
+
+We will be learning to display LM information, adding space to a volume group from an existing storage device, and then increasing the size of a  Logical volume using some of that space.
+We will then learn to reduce the size of a logical volume.
+
+On centos2
+
+Because we will be manipulating file storage, loss of data is possible.
+So, it is a good idea to backup your centos2.qcow2 disk image and also the VM xml data
+Also a good idea to do a yum update
+
+$ sudo ls /dev/vd*
+$ df -h
+
+/dev/vda1 is mounted on the /boot directory.
+The /boot directory is always mounted on a tradition partition because LVM is not available before the system is booted.
+
+Remember that centos2 was installed as a "Minimal Installation" so we will need to install some additional tools.
+
+$ sudo yum install system-storage-manager
+
+This will install the ssm commands
+
+$ sudo ssm list
+
+We can see that there are 3 devices listed,
+    /dev/vda
+    /dev/vda1 (mounted directly on /boot)
+    /dev/vda2 added to the VolumeGroup(storage pool) centos_centos2
+
+1 VolumeGroup(storage pool) listed
+centos_centos2
+
+4 volumes listed including
+/dev/vda1 (traditional partition mounted on /boot as xfs)
+/dev/centos_centos2/root (logical volume mounted on / as ext4)
+/dev/centos_centos2/swap (logical volume not mounted)
+/dev/centos_centos2/home (logical volume mounted on /home as ext4)
+
+Compare to the output of
+df -h
+
+The commands pvs vgs and lvs will show LVM information
+sudo pvs
+sudo vgs
+sudo lvs
+
+There are also the commands pvdisplay, vgdisplay and lvdisplay
+sudo pvdisplay
+sudo vgdisplay
+sudo lvdisplay
+
+$ sudo ssm list
+Is there any free space on the Virtual Disk?
+
+Lets take some of that available space and create a new partition
+$ sudo fdisk /dev/vda
+
+p to print partition table
+n to create a new partition
+p to create a primary partition
+3 for next available partition number
+enter to accept default starting block
++3G  to set ending block
+p to print partition table
+w to save changes and quit fdisk
+
+The we need to reboot because usually the partition table for a device is read at boot time
+
+$ sudo fdisk -l /dev/vda to confirm
+
+$ sudo ssm list
+What has changed?
+
+Next we need to label /dev/vda3 as a physical volumes
+$ sudo pvcreate /dev/vda3
+
+$ sudo ssm list
+
+Now we need to add that physical volume to the VolumeGroup (storage pool)
+
+$ sudo vgextend centos_centos2 /dev/vda3
+** Make sure your VG name is correct.
+
+$ sudo ssm list
+Now we will take some of that space (2G) that we added to the storage pool and use it to create a new logical volume
+
+$ sudo lvcreate -L 2G -n archive centos_centos2
+-L size
+-n LV name
+
+Now we must format that logical volume with filesystem
+$ sudo mkfs -t ext4 /dev/centos_centos2/archive
+
+$ sudo ssm list
+
+Now we can shrink the size of the LV archive using
+$ sudo lvreduce -r -L -0.5G centos_centos2/archive
+$ sudo ssm list
+
+***Discuss -r option with images
+
+Now we can increase the size of the LV archive using
+$ sudo lvextend -r -L +1G centos_centos2/archive
+$ sudo ssm list

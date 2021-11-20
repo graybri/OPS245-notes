@@ -1,0 +1,48 @@
+In this video I will be discussing Lab 5 Investigation 2- Part 2
+
+We will be adding 2nd Virtual Disk to centos2 and then use that disk to create  a new physical volume that we will then add to the VolumeGroup then we will use that space to extend the size of the existing home LV
+
+So we will be playing out a scenario where the LV mounted on /home is running out of space and we need to increase its size by adding a new hard disk.
+
+In centos2 gather the output of
+$ sudo ls /dev/vd*
+$ sudo ssm list
+$ sudo df -H
+
+On kvm window select view details
+Bottom left corner click add hardware
+Add storage device 2G VirtIO
+select view console
+
+$ sudo ls /dev/vd*
+See new device vdb
+
+Create a partition
+$ sudo fdisk /dev/vdb
+p to print partition table
+n to create a new partition
+p to create a primary partition
+1 for next available partition number
+enter to accept default starting block
+enter to accept default ending block
+p to print partition table
+w to save changes and quit fdisk
+
+Reboot centos2
+$ sudo fdisk -l /dev/vdb
+*** SKIP STEP 9 ***
+
+Create PV
+$ sudo pvcreate /dev/vdb1
+
+Add to VG
+$ sudo vgextend centos_centos2 /dev/vdb1
+
+$ sudo ssm list
+
+Now use this new space to increase the size of home LV
+$ sudo lvextend -r centos_centos2/home --size +2G
+
+$ sudo ssm list
+
+Reboot centos2

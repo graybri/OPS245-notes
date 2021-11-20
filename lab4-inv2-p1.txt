@@ -1,0 +1,39 @@
+In this video we will be examining where our accounts ability to use sudo comes from
+
+Recall that when we installed our VM's our initial regular account was made an administrator of the system because we checked the box
+
+This setup our initial account to be able to use sudo to elevate our privileges to root run all commands on the system
+
+sudo access is controlled by the file /etc/sudoers
+
+on centos1
+
+sudo less/etc/sudoers
+/bgray 
+not found
+
+cat /etc/group
+look for our account and ops245_1
+
+Part of scondary group called wheel
+
+sudo less /etc/sudoers
+
+/wheel
+
+%wheel ALL=(ALL) ALL
+
+Lets create a new user account for ourselves on centos3 and give them sudo access by adding them to the wheel group
+
+on centos3
+login as ops245
+
+sudo useradd -m bgray
+sudo passwd bgray
+sudo usermod -aG wheel bgray
+
+cat /etc/group
+logout 
+login as bgray
+sudo cat /etc/shadow
+

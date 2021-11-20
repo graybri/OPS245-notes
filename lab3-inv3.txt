@@ -1,0 +1,98 @@
+Part 1
+
+on c7host
+
+yum is a tool that works with centos online repositories of software packages
+it can also be configured to work with third party repositories to access softeare packages not included in the official centos repostories
+
+sudo yum install elinks
+yum info elinks
+
+sudo yum remove elinks
+
+yum info xchat
+
+wget http://mirror.centos.org/centos/7/os/x86_64/Packages/xchat-2.8.8-25.el7.x86_64.rpm
+
+sudo yum localinstall xchat-2.8.8-25.el7.x86_64.rpm
+
+run xchat
+
+yum repolist
+
+Show list of repositories web site.
+
+sudo yum install epel-release
+
+yum repolist
+
+Part 2.
+
+Another way to install software is to download, compile and install from source code.
+
+Often because a piece of software is not included in repositories. Or you want to experimint with a development version
+
+Usually source code files are made available in zipped tarballs (archive files)
+
+Source code needs to be compiled using software development tools and libraries what will need to be installed first.
+
+on c7host
+
+which lbreakout2
+
+Web search lbreakout2 tar.gz
+
+Use wget to download
+
+wget http://prdownloads.sourceforge.net/lgames/lbreakout2-2.6.5.tar.gz
+
+Extract the tarball
+
+cd to source directory
+ls 
+point out configure script and makefile
+
+./configure && make
+
+Discuss && and ||
+
+Examine errors
+
+Missing development tools compilor etc
+
+sudo yum groupinstall "Development Tools"
+
+./configure && make
+
+Examine errors
+
+Missing Libraries
+
+sudo yum install SDL-devel libpng-devel zlib-devel
+
+./configure && make
+
+lbreakout2
+
+needs to be installed
+
+sudo make install
+
+lbreakout2
+
+Part 3
+
+rpm -qi xchat
+
+Examine -i output
+
+rpm -qia
+
+rpm -qia | sed -nre '/^Name[[:space:]]+:/ p' -e '/^Install Date[[:space:]]*:/ p'
+
+
+
+
+
+
+

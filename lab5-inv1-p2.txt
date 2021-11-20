@@ -1,0 +1,120 @@
+In this video I will be discussing Lab 5 -Investigation 1 - Part 2
+
+
+Where we download a script that we can use to email an alert if a mounted filesystem is more than 90% full
+We will examine the contents of the script to understand how it works and learn how to schedule that script using the Linux scheduling service called crond
+cron is a term from the word chronograph
+which is a type of time keeping device
+
+It can be used to schedule routine tasks
+
+On c7host
+
+Change to your bin directory
+Download the script
+
+$ wget https://ict.senecacollege.ca/~ops245/labs/monitor-disk-space.py
+
+Review the script...
+Script based off a bash script downloaded from the internet.
+It will check the mounted storage devices to see if they are more than 90% full.
+If there are any it will email an alert to the admin user.
+This script would then be scheduled to run every night automatically.
+We will need to install the mailx package on c7host
+$ sudo yum install mailx
+$ sudo mail -u root
+
+Delete existing internal mail messaages
+d1-x
+q to quit
+
+$ vi script
+
+import os
+Change admin='root' to admin='bgray'
+
+Change alert=90
+alert=10
+
+Capture the hostname using os.popen()
+Note the use of multiple methods that make the python code very efficient
+hostname = os.popen("hostname").read().strip()
+
+In python3
+better than
+    import os
+
+    hostname = os.popen("hostname")
+    hostname=hostname.read()
+    print(hostname)
+    hname=hostname.strip()
+    print(hname)
+
+similar comand to get the timestamp
+
+Then we have an os command to retrieve the list of mounted devices and there use percentage
+df -H | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{print $5 " " $1 }'
+
+Lets break this down:
+
+df -h
+df -H
+
+Not interested in header line or tmpfs lines or cdrom device, so use grep to elimnate those lines
+
+df -H | grep -vE '^Filesystem|tmpfs|cdrom|sr0' | awk '{ print $5 " " $1 }'
+
+Then loop through 1 line at a time using  diskusage.readlines()
+df -H | grep -vE '^Filesystem|tmpfs|cdrom|sr0' | awk '{ print $5 " " $1 }' | head -1
+
+Take the line and extract the usage without the % synbol
+df -H | grep -vE '^Filesystem|tmpfs|cdrom|sr0' | awk '{ print $5 " " $1 }' | head -1 |  awk '{print $1}'
+
+df -H | grep -vE '^Filesystem|tmpfs|cdrom|sr0' | awk '{ print $5 " " $1 }' | head -1 |  awk '{print $1}' | cut -d'%' -f1
+
+Take the line and extract the device name
+df -H | grep -vE '^Filesystem|tmpfs|cdrom|sr0' | awk '{ print $5 " " $1 }' | head -1 |  awk '{print $2}
+
+Convert usage to int
+Cleanup device
+
+if usage > alert:
+    Send notification mail command.
+    os.system("echo '" + hostname + " is running out of space on " + partitionstring + " partition.  As of " + date + " it is at " + usage + "%.' | mail -s 'Alert: " + hostname + " is almost out of disk space' " + admin)
+
+Run script as bgray and read email
+
+So to automate we need to schedule the script to run at night as a cron job
+Edit our crontab (cron table)
+Any user may schedule their own cronjobs
+Certain days or timestamp
+Each user can create a list of their own cronjobs
+crond is the name of the cron service
+
+$ systemctl status crond
+Can edit the main crontab file but rarely used now
+
+$ cat /etc/crontab
+5 fields to schedule the job
+minute (0-59)
+hour (0-24)
+day of month (1-31)
+month (1-12) or  (jan,feb,mar, etc)
+day of week (0-6) or (sun,mon,tue, etc)
+
+Followed by username to run the job as
+Followed by command to be executed
+
+Generally we edit cron list for each user using crontab command
+
+$ crontab -e
+Add comment followed by cron line
+#Runs first day of each month at 6AM
+0 6 1 * * /home/bgray/bin/monitor-disk-space.py
+
+Save and quit
+To see users who have crontab files
+$ sudo ls /var/spool/cron
+$ sudo cat /var/spool/cron/bgray
+
+$ crontab -l

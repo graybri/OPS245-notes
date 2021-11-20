@@ -1,0 +1,30 @@
+Describing the environment we will be creating during the first 2 labs that we will use for the remainder of the course.
+
+Demo how to get to Lab 1 from BB
+maybe mistakes and old stuff as we continue to transition to OPS235
+
+Navigation of lab document
+
+Review diagram
+
+Windows PC --> VMWare --> c7host --> KVM --> centos1 centos2 centos3
+
+Complex setup but it allows us to create VM's and VNets entirely in Linux
+
+Disk Space 240G+ SSD or that amount of HD space.
+SSD required in on-campus labs
+
+File Manager - This PC
+Need 300G on local drives or external ssd
+Not to be shared with other courses
+Need CentOS7 iso and VMware 
+Blackboard --> Software Links --> VMware centos7 
+Purchase for free VMware 16 pro
+Check email  for serial number
+Install VMware in preparation for Lab 1
+
+
+
+
+
+

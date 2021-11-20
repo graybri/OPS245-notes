@@ -1,0 +1,47 @@
+Lab 5
+
+In this video we will learn to monitor disk space usage, which is a very important task for sysadmins.
+
+We will create a script to help us and then schedule that script to run automatically using cron
+
+We will then learn to manage our storage devices by resizing them, adding additional devices and adding them to our system.
+
+Investigation 1 Part 1
+
+sysadmins must monitor disk space usage on a regular basis  to make  sure that we don't suddenly run out of space on any of our devices which could cause the system to fail or application stall
+
+Implications of running out of space. The OS requires some available space to function, temp files, logging etc.
+
+In  centos2
+
+$ df
+$ df -h
+
+Explain output
+
+Note space usage for / and /home
+
+Demo
+As user
+$ dd if=/dev/zero of =~/largefile bs=1024 count=1000000
+$ ls -l ~
+
+$ df -h
+To investigate how much space is taken up in each users home directory we can use:
+
+$ sudo du -hs /home
+$ sudo du -ha ~bgray
+$ sudo ls -l ~bgray
+
+If space runs low we can reallocate space among devices or add additional storage devices.
+We can also Investigate the cause of sudden increases in space usage.
+These can include users activity, excessive logging, or potential intrusion or hacking activity
+
+If users are consistently using too much space Linux has a quota system that can be enforced. (Not covered in this course)
+
+We can also use the find command to locate very large files on the system.
+
+$ sudo find / -size +100000k
+$ ls -l /home/bgray
+
+Conclude

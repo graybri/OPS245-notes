@@ -1,0 +1,27 @@
+Lab 2 Investigation 3 Part 2
+
+We will be downloading a backed up disk image file and VM xml file for a VM called centos4
+
+We will restore the VM definition and disk image file so that centos4 becomes usable.
+
+cd ~/backups
+wget https://ict.senecacollege.ca/~ops245/centos4.qcow2.backup.gz
+wget https://ict.senecacollege.ca/~ops245/labs/centos4.xml
+
+sudo gunzip < ~bgray/backups/centos4.qcow2.backup.gz > /var/lib/libvirt/images/centos4.qcow2
+sudo virsh define centos4.xml
+
+New VM appears in VM Manager
+to remove a VM using virsh
+
+sudo virsh undefine centos4  (no extention)
+
+sudo virsh define centos4.xml
+
+Start centos4
+
+Click on the user and then the cog icon 
+Select a different desktop envirionment
+login with password ops245
+
+

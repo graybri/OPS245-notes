@@ -1,0 +1,61 @@
+In this video I will be discussing Lab 5 Investigation 2- Part 3
+
+We will be configuring centos2 to automatically mount the new archive LV on to a new mount point in the filesystem
+
+When we installed centos2 we configured the mount points and their device types and filesystem types.
+
+The Installation program configured centos2 to boot with all of those devices automatically mounted and made available in the filesystem.
+
+The process of mounting in simple terms is to attach a formatted device to a certain mount point within the hierarchical filesystem.
+The mount point is just a directory that is almost always empty.
+
+$ sudo ssm list
+
+In the previous part of the lab we created a new LV called archive
+But we can see that this logical volume is not mounted anywhere in our filesystem
+
+To manually mount and dismount devices we would use the mount and umount commands
+
+First we need to create a mount point (empty directory)
+$ sudo mkdir /archive
+
+$ sudo ls /archive
+
+Now mount the device
+$ sudo mount -t ext4 /dev/centos_centos2/archive /archive
+The names do not have to be the same
+
+$ sudo mount
+$ sudo ssm list
+$ sudo df -h
+$ sudo ls /archive
+
+Explain lost+found
+
+Create a file in /archive
+First give permissions to other users
+$ sudo chmod 777 /archive
+$ echo "This is a test file" > /archive/testfile.txt
+$ ls /archive
+
+Unmount the device
+$ sudo umount /archive
+$ ls /archive
+
+$ sudo mount
+
+To have the device automatically mounted when the system boots up we need to edit the filesystem table.
+** We must be very careful when editing this file! Errors could leave our system unable to boot!
+
+$ sudo vi /etc/fstab
+
+Add the following line to the bottom of the file
+
+/dev/centos_centos2/archive /archive ext4 defaults 1 2
+
+To then force that new entry to execute use the command
+$ sudo mount -a
+
+$ ls /archive
+
+Reboot and check

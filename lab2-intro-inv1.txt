@@ -1,0 +1,62 @@
+Intro
+Review enviornment
+Installing KVM into c7host
+INstalling 3 centos VM's in different configurations and using different installation methods
+We will then learn to use the virsh command to manage our vitual machines
+Then we will learn how to properly backup and restore VM images and VM configurations
+
+We will then learn to create a python script that we can use to backup up our virtual machines
+
+Investigation 1
+In this investigation we will be installing KVM and configuring it to support nested VM's
+
+Part 1
+Log into c7host
+Perform a system update
+
+sudo yum update
+
+Install the KVM virtualization software
+sudo yum install qemu-kvm qemu-img virt-manager libvirt lib-virt-python \
+libvirt-client virt-install virt-viewer bridge-utils
+
+Reboot
+
+This installed the qemu/kvm hypervisor, a new service called libvirtd that manages the VM's,
+a GUI tool for working with the VM's and virsh a command line tool for working with the VM's
+
+Start the libvirtd service
+sudo systemctl enable libvirtd
+sudo systemctl start libvirtd
+
+Centos 7 installs a firewall service called firewalld we revert it back to the older and widely used iptables service.
+systemctl is the command used to manage system services
+
+sudo systemctl disable firewalld 
+sudo systemctl stop firewalld
+sudo yum remove firewalld
+
+sudo yum install iptables-services
+sudo systemctl enable iptables
+sudo systemctl start iptables
+
+Run virt-manager as your regular user
+
+Part 2
+Now we have to edit the c7host boot configuration to support nested VM's
+
+sudo vi /boot/efi/EFI/centos/grub.cfg
+
+Look for first occurance of the th linux kernel boot command (linuxefi) and insert the boot option kvm-intel.nested=1 after LANG
+
+save and quit
+reboot c7host
+
+check it worked 
+cat /sys/module/kvm_intel/parameters/nested
+should output Y
+
+conclude
+
+
+  
