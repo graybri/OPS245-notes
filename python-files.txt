@@ -1,0 +1,153 @@
+In this lesson you will learn to use python to read from and write to files.
+This will allow your python scripts to make more persistent changes to your systems.
+
+Interacting with files in your python scripts can be broken down into three main steps
+Opening the file
+Using the file
+Closing the file
+
+$ vi file1.py
+
+To open a file in python, simply call the open() function.
+Give it the name (or path) of the file you want to access, along with a mode that represents the type of action you will be taking with the file.
+variable = open(‘<path>’,’<mode>’)
+Here we let it return the opened file as a variable.  We’ll see another way to do this later.
+
+fo=open('test.txt','r')
+fo is the file object (a variable that represents that open file)
+
+There are several modes you can open a file into:
+w – write mode.  Allows you to send data to the file.  Note that this will replace an existing file, or create a new one.
+a – append mode. Allows you to add data to the end of the file.
+r – read mode.  Allows you to read data from the file, but not to alter it.  Note that reading is the default mode, so you might see open commands that leave it out.
+
+There are also some slightly more advanced modes:
+r+ - read and write mode.  Allows you to read from the file, and to make changes to it.
+a+ - append and read.  Like read and write, but starts you at the end of the file instead of the beginning.
+
+Note that reading and writing rely on you opening the file with a mode that supports that activity.
+The mode you choose will also impact your initial position within the file.
+
+Now that we have our file open, there are three main things we will do:
+Read text from the file.
+Write text to the file.
+Change position within the file.
+
+Lets focus on reading for now
+
+Reading from a file is simple.  You’ve already been using the commands that allow it:
+read() – obtain the entire contents of the file.  You can also pass this a number, to indicate how many characters to read.
+
+$ ./file1.py
+
+Very important to close the file when we are finished and before we exit the script
+Failure to close files can lead to system problems.
+Remember we have to clean up after ouselves.
+There are two ways you can close files in python:
+<filevariable>.close()
+Just take the variable that represents your file and call the close() function.
+fo.close()
+
+A common habit among admins learning to script is to use the exit() command anytime they think the script is done.
+Up until now, this has just been a bad habit to avoid, but it can be an actual problem when working with files.
+Don’t exit() while you still have a file open.
+Close it, then exit, or just close it and let your script exit at the end.
+
+In case we forget to close our files a better way would be:
+Opening a file in a context manager code block and letting the code block automatically close it.
+
+$ vi ./file2
+
+This requires opening the file with the with keyword.
+
+Opening a file with the with keyword allows us to create an indented code block in which the file remains open.
+As soon as that block is done, python automatically closes the file for us.
+
+   with <opencommand> as <filevariable>:
+      #do something with our file
+      #As soon as you stop indenting for that code block,
+      #the file is closed.
+
+  We can see information about the open file using the values in
+  fo.name
+  fo.mode
+  fo.closed
+
+$ ./file2.py
+
+$ vi file3.py
+
+Another way of reading the contents is to read all lines using readlines()
+Which returns the lines of the file as a list object
+contents=fo.readlines()
+
+$ ./file3.py
+
+$ vi file4.py
+
+readline() – obtain one line from the file.  Commonly combined with a  loop.
+You can also use a for loop to access each line in turn, without needing to explicitly call read:
+
+$ ./file4.py
+
+$ vi file5.py
+
+for <linevariable> in <filevariable>:
+    #do something with <linevariable>.
+    print(linevariable)
+
+$ ./file5.py
+
+To move through a file we would use the seek() function and the read() functions
+
+$ vi file6.py
+
+As we read() or readline() from the file we advance through the file
+ fo.tell() returns current position in the file
+We can change our position in the file using seek()
+For text files we can only seek relative to the beginning of the file
+
+$ ./file6
+
+To summarize 3 methods to read from file object
+fo.read()
+fo.readlines()
+fo.readline()
+
+$ vi file7.py
+
+When we want to write to a file we want to open it in one of 2 modes (w or a)
+
+You can write data to the file with the write function.
+<filevariable>.write(stringvariable)
+Note that when you want a new line in your file, you have to explicitly write it with \n.
+
+Mode w will overwrite file contents starting at the beginning
+Mode a will append lines to the end of the file
+
+$ cp test.bak test.txt
+$ ./file7.py
+
+explain output
+
+$ cp test.bak test.txt
+
+$ vi file8.py
+
+There are several exceptions that you may need to handle when dealing with files:
+FileNotFoundError – When attempting to open a file that does not exist for reading.
+PermissionError – When attempting to read or write to a file you don’t have sufficient permission for.
+
+$ ./file8.py
+
+$ vi file9.py
+
+A comparatively easy way to modify the data in a file is to read the entire thing into a list variable, edit the line you want, then write the entire contents back to the file.
+Calling the readlines() function on an open file will return the entire contents as a list.  One line per element.
+This will usually allow you to manipulate the data (and move around) much more easily than with the seek() function.
+
+$ ./file9.py
+
+In this lesson you have learned how to interact with files using python.
+This will allow you to write scripts that can make changes to files on your systems.
+Since most configuration is stored as files, this will allow you to make configuration changes to your system, and the services running on it, using scripts.

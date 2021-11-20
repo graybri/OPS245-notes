@@ -1,0 +1,10 @@
+In this video we will be learning to use the try: except:
+
+$ vi notry.py
+
+step through code and demo with a bad filename and a good filename
+
+We can use the try: except: code block to handle errors.
+$ vi try.py
+
+step through code and demo with a bad filename and a good filename

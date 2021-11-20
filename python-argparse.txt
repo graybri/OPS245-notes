@@ -1,0 +1,131 @@
+In this video we will learn to use the argparse python module to turn our interactive scripts where the user is prompted for input to be used in the script, to a non-interactive script that can be automated and run without user interaction.
+
+This will be accomplished command line arguments to the script to supply the information it needs
+
+Review lab3.py
+and run
+
+The script needs human interaction to complete it's task
+
+
+but it would be much more automated if the information could be provided on the command line.
+
+
+vi args1.py
+
+The argparse python module makes using command line arguments easy and very usefull without having to produce a lot of code to parse the command line.
+
+It also automatically generates a help screen to guide the user.
+
+Using argparse requires the following steps
+
+import argparse
+
+
+Instantiate a parser object using:
+parser = argparse.ArgumentParser() 
+with an optional description that will appear in the help screen
+
+Define the required positional arguments and also optional arguments
+
+Parse the actual command line using the parse_args() method:
+
+args = parser.parse_args()
+
+Retrieve the arguments from args and use their values
+
+./args1.py
+
+./args1.py -h
+./args1.py first
+./args1.py first second
+
+vi args2.py
+
+Postitional arguments are required
+We can also add optional arguments
+
+Optional arguments (options) can include a longform name starting with 2 dashes (required) eg '--file' 
+and a short form usually a dash followed by a single letter. eg -f
+
+This follows the posix standard for linux and unix command line tools.
+eg.
+man useradd 
+
+Adding arguments and options to the parser object. can include a number of flexible options and attributes
+for example help="Help Screen Message describing argument"
+and defining a data type for that argument.
+
+The long form of the option without the 2 dashes becomes the argument name
+
+./args2.py
+./args2.py -h
+./args2.py first second
+./args2.py -f file.txt first second
+
+
+vi args3.py
+in this example we will accept two positional arguments that should be integers and an option of -o --operator that will specify the math operator to be used
+If no operator is included it will default to "add"
+The only valid choices are add, subtract, multiply
+
+Then perform a different action basede on the value of operator 
+./args3.py
+./args3.py -h
+./args3.py 10 5
+./args3.py --operator division 6 9
+./args3.py --operator multiply 6 9
+
+
+vi args4.py
+
+Rather than accept the operator as a value for the option.
+We can use different options for the different operations 
+action="store_true" says that if this option is present save the Boolean value True as the value
+
+so if a --add option is used args.add = True
+we can then examine this boolean in an if statement.
+
+if no operator is supplied the else clause prints an error
+
+./args4.py
+./args4.py -h
+./args4.py 5 8
+./args4.py -m 5 8
+What happens if more than one operator option is entered?
+
+./args4.py -a -s 6 8
+The options should be mutually exclusive. Preventing more than one operator being entered
+
+vi args5.py
+
+We can add the operators as a mutually exclusive group. Meaning only a single operator option can be used.
+
+Create a group using parser.add_mutually_exclusive_group
+Then add the arguments to the group object instead of to the parser object. 
+
+
+./args5.py
+./args5.py -h
+see how the options are listed as mutually exclusive in the usage line
+./args5.py -s -a 4 9
+
+./args5.py 2 9
+
+./args5.py -m 2 9
+In this video we learned how to use argparse to create fully functional python scripts that can accept command arguments and options to control the scripts actions rather than interactive user input.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

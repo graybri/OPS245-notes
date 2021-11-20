@@ -1,0 +1,145 @@
+Using python logical control structures -- ifs
+
+We will continue learning about python scripting by adding logical control statements 
+if structures
+
+We need if logical control structures to execute different commands based on the evaluation of one or more conditions
+
+If we don't use ifs then our scripts will always do the same thing when executing a script by executing a list of sequential commands
+
+vi menu.py
+
+
+Logical control structures like ifs allow scripts to evaluate conditions and respond accordingly
+
+run if1.py
+use 12 and 42
+
+Checking a condition with if allows us to execute commands if that condition is true
+
+We can test many types of conditions
+Are 2 strings the same
+Are 2 numbers equal
+Is this file executable
+
+If statements
+Just as we learned in bash python has an if control structure for testing a condition
+
+if condition:
+	command
+	command
+	command
+
+If the condition evaluates to true the block of code executes
+If not the block is skipped
+Indentation is used in python to indicate the contents of the block
+In bash we used then and fi to indicate start and end of the block
+
+vi if1.py
+
+Conditional operators
+== 2 values are equal
+!= 2 values are NOT equal
+< less than
+<= less or equal to
+> greater than
+>= greater or equal
+
+Both values must be the same datatype
+For int and float these operators are pretty straightforward
+With strings the unicode value of the characters are examined character by character
+Letters later in the alphabet are "larger"
+Lower case letters are larger than upper case
+
+Adding else:
+vi if2.py
+
+else:
+starts a 2nd indented block for commands if the condition is False
+
+Notice the use of quotes in magic='42'
+Thats because the input() function accepts use input as string data regardless of what is typed and operators require operands to be the same datatype
+
+./if2.py
+33
+42
+
+Nested ifs
+vi if3.py
+
+You can nest if blocks inside other blocks
+Requires an extra level of indentation
+We can even test for multiple conditions separated by a logical operator (or,and)
+
+Remember when testing conditions the datatypes must be the same 
+Note the use of int()
+ 
+./if3.py
+42
+41
+33
+
+vi if4.py
+
+if else nested within else
+multiple levels of indentation
+Note the steps to make sure that conditions are tested using the same datatypes
+int()
+
+./if4.py
+42
+41
+33
+
+Testing mutilple conditions using elif
+elif condition:
+	command
+
+vi if5.py
+often more efficient and easier to read than nested ifs
+multiple elifs can be used
+
+else always last and executed if all conditions are false
+
+Boolean Variables
+2 possible values (True,False)
+
+Testing a condition returns a Boolean result
+
+vi bool.py
+5==5 is evaluated to True which is assigned to var1
+
+5>25 is evaluated to False which is assigned to var2 (Boolean datatype)
+
+if var2:
+var2 will be False, skip to else
+change datatype of var2 to a string and ouptut with other text
+
+str(var2)
+
+./bool
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+

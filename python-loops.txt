@@ -1,0 +1,188 @@
+Python Scripting Loops
+
+This video will introduce us to looping control structures
+There are 2 types of loops
+
+For loops execute through some sort of list of values
+While loops execute based on a condition evaluating to True
+
+For loops operate on lists
+Lists are a datatype similar to an array in other languages
+Lists hold a list of multiple values that can reference by index position
+
+For loops can also operate on tuples, dictionaries, sets, and strings also
+All of these datatypes can hold multiple values
+
+for item in listvariable:
+	command
+	command
+
+vi lists.py
+
+Creation of a list variable names
+print(list) prints the entire list
+Usually we loop through the list to deal with one value at a time
+
+We can also access individual values in a list by using it's index value
+
+We can add to the end of a list using
+list.append('item')
+
+We can insert a value into a list using 
+list.insert(index,'value')
+
+We can append a 2nd list to our existing list
+list.exend(list2)
+
+vi strings.py
+
+We can use a for loop to loop through a string accessing one character at a time
+
+vi strings2.py
+These characters can be modified and used to build a new string
+
+Lets build a script that manipulates strings of characters from an important file in our operating system.
+
+The file /etc/passwd contains a list of user accounts on our system
+cat /etc/passwd
+Most of these accounts are accounts used by the system.
+The last line is the record of the only regular user we have created
+Notice it has fields for login name,UID,Full Name, and home directory
+Notice that each field is delimited by the : 
+Later in the course we will learn user management but for now I am going to add 2 new users for demonstration purposes
+
+sudo useradd -m lwhite -c "Lisa White"
+sudo useradd -m pbrown -c "Peter Brown"
+cat /etc/passwd
+To only see regular users I can use
+grep "home" /etc/passwd
+
+vi userprint.py
+
+First we import the os module
+Then we use os.popen('command') to execute the grep command and store the result in users
+
+users is a special datatype defined in the os module.
+Lets output the type to see what it is called
+users.read() will output the contents of this variable
+./userprint.py
+But we want to manipulate these results to be more readable
+
+vi userprint2.py
+Instead of using users.read() which gets all of the command results we will use:
+users.readlines() which will get the command results as a list of lines
+
+We will loop through the lines one at a time assigning the line to a string called user
+Then inside the loop block we are going to split up the line into a list of values separated by the : character using the .split() method
+
+This list will be assigned to cutup which will be a list datatype
+We will assign the 5th value in the list (cutup[4]) to the string variable name
+We will assign the 3rd value in the list (cutup[3]) to the string variable uid
+Then we will output only the Full Name and UID fields
+
+./userprint2.py
+
+Sets
+
+vi sets.py
+Sets are similar to lists
+With some differences
+
+use {} to bound the list 
+Value order is random and not available by index value
+Values can't be removed or changed 
+set.add() can be used to add a value to a set
+Duplicate values are not permitted
+
+./sets.py
+
+Adding an else block to a for loop
+
+vi countdown.py
+
+an else: block can be added to a for loop
+It is executed after the last iteration of the loop 
+
+./countdown.py
+
+While loops
+
+A while loop tests a condition and continues to loop as long as the condition evaluates to true
+Something must happen within the loop that changes the condition to false or the loop will never end
+
+Adding an else: block to a while loop will cause the else: block to execute after the last execution of the while loop or if the condition never evaluates to true and the loop doesn't execute.
+
+vi countdown2.py
+
+vi countdown3.py
+
+Python doesn't include an until loop.
+until loops are similar to while loops but they always loop until a condition evaluates to True
+They always execute at least once.
+
+We can always use while (condition) == False:
+to mimic an until loop
+
+vi countup.py
+
+or use the not() function
+
+vi countup2.py
+
+Both of these are ways to invert the test of the condition
+not() reverses the value of a boolean or condition(that evaluates to a boolean) inside it
+
+Loops are very useful for excuting a block of code repeatedly either conditonally or through a list of values
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

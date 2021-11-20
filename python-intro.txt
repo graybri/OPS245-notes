@@ -1,0 +1,124 @@
+Python Scripting
+
+Python scripting will appear in many of our labs
+Python is a very common scripting language available in all OS
+Python is widely used in Linux development
+
+In ULI101 we learned to script using bash
+In OPS245 and future courses we learn how to script using python
+
+Versions are important and not backwards compatible
+Python 2 is widely available and installed in CentOS7
+Python 2 no longer being developed 
+Replace by python 3
+Because many python 2 apps are installed we can actually install both versions of python
+We must be cautious about which version we are using
+
+Run python --> Version
+exit() or ctrl-d
+
+Install python3
+sudo yum install python3
+Run python3 --> Version
+exit() or ctrl-d
+
+Python can run as an interactive environment or more commonlly be written as scripts that are then executed in a python environment
+
+Python scripts commonly have a file extension of .py and be given executable permissions as well as read.
+
+
+Create ~/bin --> cd ~/bin
+vi hworld.py
+
+Sh-bang forces the contents of the script file to be executed by a particular environment ie python3
+#!/usr/bin/env python3
+
+Comments
+#Single line comment
+'''
+multi
+line 
+comment
+'''
+
+Indentation is highly significant in python syntax as opposed to other languages where indentation is good programming style and practise
+
+vi first.py
+
+Use the print() function to output text
+
+Variables
+Variables are set in a similar way to bash
+varname=value
+
+varnames must start with a letter or underscore
+varnames cannot start with a number
+case sensitive and can only contain letters numbers and underscore
+
+Unlike bash Variables have datatypes
+Unlike bash we don't need to start variable with $ to access value
+
+There are many different datatypes but the basic ones for now are:
+int (whole numbers)
+str (Strings of text bounded by quotes)
+float (numbers with decimal points)
+boolean (True or False)
+
+We can see the datatype by using the type() function
+Getting input from the user can be done with input() function (accepts data as str)
+
+Operators are the same as bash (+ - \ *) 
+no need to use $(( )) like bash
+There effect depends on the data type
+ie + when used with strings combines them into one bigger string
+
+Python can be used in many different ways, it has a lot of different applications.
+Only basic functionality is available by default.
+
+As system admins we want to write scritps that interact with the Operating System
+We need to add that functionality by importing a python module that includes those capabilities
+Use the import command
+
+import os
+ 
+vi osexample.py
+
+use functions from the os module to interact with the operating system
+
+os.system('command') will output the result of the command and return the exit status as an integer which can be assigned to a variable.
+
+To store command output in a special datatype variable (os._wrap_close) use 
+variable=os.popen('command')
+To output the contents 
+print(variable.read())
+
+We have been introduced to the basics of using python for system administration scripts.
+As we progress through the course and program you will learn more python.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
