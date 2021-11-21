@@ -1,10 +1,28 @@
+In this part of  the lab we will use an ssh connection to run a Xwindows (graphical) application remotely
+
+Show graphic in wiki
+
 On c7host
 
 as bgray
 
-ssh -X -C bgray@centos1
+$ ssh -X -C bgray@centos1
 
-gedit
+Once connected
+$ gedit
 
-ps x on both
+The gedit application will display on the local desktop (c7host)
+However it is running on centos1 using its CPU and memory resources
 
+$ ps x (on both)
+
+Enter text and save file as Xwindows.txt
+Where is the file saved?
+
+Exit gedit
+
+You can also connect and run gedit with a single command
+
+$ ssh -X -C bgray@centos1  gedit
+
+exit

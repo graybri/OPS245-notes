@@ -1,3 +1,5 @@
+Every  time you allow remote access to  a shell you are opening up a possible avenue of attack from hackers
+
 Hackers know that port 22 is commonly open
 They also know the root account name.
 
@@ -5,59 +7,74 @@ This makes ssh a target of attack, all that is required is the password.
 Brute force attacks could be used.
 
 2 things can make this harder
-Use a non default port number for ssh
-Disable root login over ssh
+- Use a non default port number for sshd
+- Disable root login over ssh
 
-On centos1
-
-open terminal 
-su -
-
-vi /etc/ssh/sshd_config
-
-examine file
+** On centos1
+open terminal
+$ sudo vi /etc/ssh/sshd_config
+Look for PermitRootLogin
 
 uncomment and set to no
 #PermitRootLogin no
+
+If we are disabling root login we need to make sure that at least one other account is allowed to ssh login
+Often we may not want every user to access ssh remotely so we can list users allowed to ssh login
 
 add
 AllowUsers bgray
 
 Restart sshd
-systemctl restart sshd
+$ sudo systemctl restart sshd
 
 On c7host
 ssh root@centos1
 ssh bgray@centos1
 
 On centos1
-useradd -m other
-passwd other
+$ sudo useradd -m other
+$ sudo passwd other
 
 on c7host
 ssh other@centos1
 
 on centos1
-vi /etc/ssh/sshd_config
+S sudo vi /etc/ssh/sshd_config
 add other to AllowUsers
 
-systemctl restart sshd
+$ sudo systemctl restart sshd
 
 on c7host
-ssh other@centos1
-then
-sudo ls /etc/
-su -
+$ ssh other@centos1
 
-less /var/log/secure
+exit
+
+$ ssh bgray@centos1
+
+Backup your sshd_config file to your home directory
+
+$ sudo cp /etc/ssh/sshd_config ~/sshd_config.bk
+
+Make sure all users can read the files
+
+$ chmod go+r  ~/sshd_config.bk
+
+Finally as a sysadmin you should routinely monitor your security logs for unauthorized login attempts
+
+The security log also records all attempts to use su and sudo
+
+$ sudo ls /etc/
+$ su -
+$ exit
+
+$ sudo less /var/log/secure
+G to drop to bottom line
+
+Look for:
 ssh connections logins
 su usage
 sudo usage
 
-grep sudo: /var/log/secure
-grep su: /var/log/secure
-
-
-
-
- 
+$ sudo grep "su :"  /var/log/secure
+$ sudo grep "sudo:" /var/log/secure
+$ sudo grep "sshd:" /var/log/secure

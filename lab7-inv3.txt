@@ -1,6 +1,8 @@
-PART 1
+In this part of the lab we will learn to configure the firewall service called iptables to control our network traffic
 
-iptables is a tool that povides an interface to configure up chains of policy rules 
+Review image in wiki
+
+iptables is a tool that provides an interface to configure chains of policy rules
 
 There are 3 commonly used chains INPUT OUTPUT and FORWARD
 
@@ -11,14 +13,19 @@ The OUTPUT chain contains rules and a default policy for any network traffic bei
 The FORWARD chain contains rules and a default policy or any network traffic that is being routed between networks the host is connected to.
 Typically FORWARD is used on devices that are functioning as Routers on the network
 
-Chain.png and Chain.pdf
+Discuss actions ACCEPT REJECT DROP LOG
 
-On c7 host
+Discuss default policy
 
-iptables -L Describe output
-iptables -L -v
+chain.png and chains.pdf
 
-iptables -L INPUT
+On c7host
+
+$ sudo iptables -L
+Describe output
+
+$ sudo iptables -L -v
+$ sudo iptables -L INPUT
 
 To "flush" or delete the chains of rules
 
@@ -28,19 +35,27 @@ iptables -F OUTPUT
 
 PART 2
 
+Setting a default policy for a chain creates a sort of safety net policy that affects all packets not handled by a specific rule
+
+Default policies can be restrictive (secure) or permissive
+
+Review chains.pdf
+
 To change a default policy
-iptables -P INPUT DROP 
-iptables -L
+$ sudo iptables -P INPUT DROP
+$ sudo iptables -L
+All incoming packets are now dropped
 
 Firefox to google
-
-iptables- P INPUT ACCEPT
+$ sudo iptables- P INPUT ACCEPT
 
 Firefox to google
-iptables -P INPUT DROP 
+$ sudo iptables -P INPUT DROP
 
 REFER to Lab 7 page
-To add a rule:
+We need to add a rule to allow incoming web traffic through the firewall
+
+To add a rule we need to control the following:
 Where in the chain? order is important
 
 -A append to end
@@ -52,46 +67,118 @@ INPUT OUTPUT FORWARD "custom chain"
 
 Which protocol?
 -p tcp or udp or icmp or all
--p 
-cat /etc/protocols
+-p
+$ less /etc/protocols
 
-Source and Destination Address/Network? 
+Source and Destination Address/Network?
 -s Source IP addr
 -d Destinaton IP addr
 
 Source and Destination ports ?
---sport 22 
+--sport 22
 --dport 80
 Port numbers from /etc/services
+
+$ less /etc/services
 
 Target (action to be taken)
 -j ACCEPT or DROP or REJECT or LOG
 
-Other things like TCP state 
+Other things can be specified like TCP state Network interface
 
-iptables -A INPUT -i lo -p all -j ACCEPT
-iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-Test firefox to google
+First we will append a rule to the input chaim to allow all traffic to the loopback interface through. Allowing the computer to communicate with itself
+
+$ sudo iptables -A INPUT -i lo -p all -j ACCEPT
+$ sudo iptables -v -L INPUT
+
+Second we need a rule to ensure the local host can receive responses to traffic it sends out
+
+$ sudo iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+$ sudo ss -atn
+
+$ sudo iptables -v -L INPUT
+
+Currently incoming ssh connections are not accepted through the firewall
+
+In centos2
+
+
+connection not completed
+
+add a rule to accept incoming ssh traffic
+In c7host
+
+$ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+$ sudo iptables -v -L INPUT
+
+In centos2
+$ ssh bgray@c7host
 
 SKIP STEPS 9 - 16
 
-restart c7host
+Shutdown VM's and reboot c7host
 
-as root
-iptables -L
+$ sudo iptables -L
+
+Our customized rules have disappeared
+We want them to be persistent
 
 Part 3
-iptables -F
-iptables -P INTPUT ACCEPT
+Warning some rules are added by the libvirtd service at boot time.
+These rules are to allow c7host and the guest vm's to communicate.
+Don't add these rules to the persistent file
 
-cat /etc/sysconfig/iptables
+To prevent this restart iptables without restart libvirtd so that only the rules from the file exist
 
-cp /etc/sysconfig/iptables /etc/sysconfig/iptables.bk
-iptables-save > /etc/sysconfig/iptables
-
-restart c7host
+$ sudo systemctl restart iptables
 
 
+Make a backup of the file
+$ sudo cp /etc/sysconfig/iptables /etc/sysconfig/iptables.bk
+
+$ sudo less /etc/sysconfig/iptables
+
+List current rules
+$ sudo iptables -v -L
+
+Set the default policy of the INPUT and FORWARD chains to drop
+$ sudo iptables -P INPUT DROP
+$ sudo iptables -P FORWARD DROP
+$ sudo iptables -L
+
+$ sudo cat /etc/sysconfig/iptables
+File hasn't changed
+
+Delete the rule that allows incoming ssh traffic from anyone
+$ sudo iptables -L INPUT
+$ sudo iptables -D INPUT 4
+$ sudo iptables -v -L INPUT
+
+Add a rule that allows all hosts on your virtual network to connect with ssh
+
+$ sudo iptables -A INPUT -p tcp --dport 22 -s 192.168.254.0/24 -j ACCEPT
+$ sudo iptables -v -L
+
+Delete the rule that REJECT s all other traffic. We are protected by DROP policy In both the INPUT and FORWARD chains
+
+$ sudo iptables -D INPUT 4
+$ sudo iptables -D FORWARD 1
+ $ sudo iptables -v -L
 
 
+Make the current rules persistent
+$ sudo iptables-save > /etc/sysconfig/iptables
+
+Generates an error because the redirection isn't effected by sudo
+Enter interactive sudo
+$ sudo -i
+$ iptables-save > /etc/sysconfig/iptables
+
+Restart iptables
+$ systemctl restart iptables
+$ iptables -v -L
+
+Restart libvirtd
+$ systemctl restart libvirtd
+$ iptables -v -L

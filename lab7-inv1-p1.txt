@@ -1,5 +1,10 @@
-In this video we will be learning about sshd
+In this lab we will be learning about using ssh and configuring the sshd service to provide more security and an alternate method of authentication
 
+We will also learn to write rules for our firewall iptables
+
+ We have previously learned to use ssh to establish a remote terminal connection and use scp, sftp  to transfer files across a network through ssh
+
+ In order to connect using ssh the remote host must be running an ssh service or daemon called sshd
 
 This lab will require that you are connected to Seneca's VPN service on your windows c7host
 
@@ -8,6 +13,7 @@ Start c7host, centos1, centos2, centos3
 $ sudo virsh start centos1
 $ sudo virsh start centos2
 $ sudo virsh start centos3
+
 
 In c7host
 Make a file in your home directory called myfile.txt that contains some text
@@ -29,15 +35,19 @@ Uses ssh to connect to a remote host and receive a remote terminal shell
 We can also use ssh to run single command on the remote host instead of a interactive shell
 
 $ ssh brian.gray@matrix.senecacollege.ca ls ~
+
 Note problem with local bash using ~
+
 $ ssh brian.gray@matrix.senecacollege.ca "ls ~"
 or:
 $ ssh brian.gray@matrix.senecacollege.ca ls /home/brian.gray
+
 $ ssh brian.gray@matrix.senecacollege.ca "cat ~/myfile.txt"
 
 To establish an ssh connection you require an ssh service/daemon/server (sshd) installed on the remote host and an ssh client program installed on the local host. (ssh, scp, sftp)
 
 In most linux installations both the ssh server and client are installed by default.
+
 To check what packages were installed
 
 $ rpm -qa | grep ssh

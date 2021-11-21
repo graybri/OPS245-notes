@@ -1,33 +1,51 @@
+In this part of the lab we will learn to further configure sshd to allow and use Public/private keys as an authentication method.
+
+
 From centos3
-login as ops235
-su -
-netstat -atunp | grep sshd
+login as ops245
 
-ssh ops235@centos3
+$ sudo ss -atunp | grep sshd
+Note the LISTEN state
 
-Message explanation
+ssh into same host
+
+$ ssh ops245@centos3
+
+Explain host authentication message
 yes
 
-hostname
-cat ~/.ssh/known_hosts
-su -
-nestat -atunp | grep sshd
+$ hostname
+$ cat ~/.ssh/known_hosts
 
-See established
-exit 
+$ sudo ss -atnp | grep sshd
+
+See ESTABLISHED
+$ exit
+
+$ sudo ss -atnp | grep sshd
+
 exit
-netstat -atunp
-see TIME_WAIT
+$ sudo ss -atnp | grep sshd
 
+We may see TIME_WAIT or CLOSED or nothing depending on how fast we were.
 
+Show fingerprint error from lab
+Explain host fingerprints(digital sigantures)
 If receive fingerpint error
-Investigate cause
+Investigate cause...
 
-If clear 
-vi ~/.ssh/known_hosts
+If cause is clear and not attempt to spoof the host
+
+$ vi ~/.ssh/known_hosts
 delete line
-ssh ops235@centos3
+
+$ ssh ops245@centos3
+
 Accept new fingerprint
+
+Now we will learn to configure sshd to allow the use of Public key Authentication and then generate a pair of keys to be used for logins
+Explain PKI authentication.
+** Show image pki.pdf
 
 Configuring ssh to use PKI keys
 
@@ -36,7 +54,7 @@ Public/Private keypair encryption.
 Used for both privacy and authentication
 Asymmetrical encryption.
 2 keys are generated (aka a keypair)
-Public key 
+Public key
 Private key
 Both are required.
 When we encrypt using Public Key, only the Private Key can decrypt. (Privacy)
@@ -44,33 +62,25 @@ When we encrypt using Public Key, only the Private Key can decrypt. (Privacy)
 When encrypt using Private Key, only the Public Key can decrypt.
 (Authentication)
 
-
-
 Setup Public key Authentication
 In centos2 as REGULAR USER
 
-ssh-keygen
+generate a keypair
+
+$ ssh-keygen
+
 accept filenames
 add passphrase
+Should be long, hard to guess and easy to remember.
 
 Copy public key to centos3
-ssh-copy-id -i ~/.ssh/id_rsa.pub ops235@centos3
+$ ssh-copy-id  -i  ~/.ssh/id_rsa.pub ops245@centos3
+
 Enter password
 
-ssh ops235@centos3
+ssh ops245@centos3
 enter passphrase
 
-cat .ssh/authorized_keys
+$ ls ~/.ssh
 
-
-
-
-
-
-
-
-
-
-
-
-
+logout
