@@ -1,28 +1,47 @@
-Part 2 & 3
+Part 2
 
-vi /etc/dhcp/dhcpd.conf
+To setup our dhcpd service we edit the file /etc/dhcp/dhcpd.conf
+
+$ sudo vi /etc/dhcp/dhcpd.conf
 
 Set:
-option domain-name "ops235.org"
-option domain-name-servers 192.168.235.1
+option domain-name "ops245.org";
+option domain-name-servers 192.168.245.1;
 default-lease-time 1200;
-max-lease-time 3600
+max-lease-time 3600;
 
+** Note lines end with ;
 
-subnet 192.168.235.0 netmask 255.255.255.0 {
-	range 192.168.235.51 192,168.235.60;
-	option routers 192.168.235.1;
+Part 3
+
+Look for example subnet declaration and edit it,
+
+subnet 192.168.245.0 netmask 255.255.255.0 {
+	range 192.168.245.51 192,168.245.60;
+	option routers 192.168.245.1;
 }
 
 Save and quit
 
 on c7host
-ssh ops235@centos3
-su -
-tail -F /var/log/messages
+$ ssh ops245@centos3
+
+$ sudo tail -F /var/log/messages
 
 on centos3
-systemctl start dhcpd
+$ sudo systemctl status dhcpd
+$ sudo systemctl start dhcpd
+
+If no errors lets introduce some
+
+$ sudo vi /etc/dhcp/dhcpd
+
+Remove a ;
+Remove a closing }
+
+Save and quit
+
+$ sudo systemctl restart dhcpd
 
 on c7host
 review new messages
@@ -34,17 +53,17 @@ systemctl enable dhcpd
 Part 4
 on c7host
 via ssh to centos3
-tail -F /var/log/messages
+
+$ sudo tail -F /var/log/messages
 
 On centos1
-Click on settings 
-Settings on Wired 
+Click on settings
+Settings on Wired
 IPv4 tab
 Select Automatic
 Apply and close
 Turn off network and restart
 Review log
-open terminal 
-ifconfig
+open terminal
 
-
+$ ip address

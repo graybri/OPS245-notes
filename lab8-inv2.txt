@@ -1,24 +1,35 @@
+In this part of the lab we will find our dhcp lease information on both the client and the server, then we will configure dhcp to provide a permanent ip configuration that is reserved for a specific host (host reservation)
+
 Part 1
 
 on centos3
 
-cat /var/lib/dhcpd/dhcpd.leases
+$ sudo cat /var/lib/dhcpd/dhcpd.leases
 
 On centos1
 
-ls /var/lib/dhclient
+$ sudo ls /var/lib/dhclient
 
-if required 
-dhclient eth0
+if required
+$ sudo dhclient eth0
 
-cat /var/lib/dhclient/dhclient.leases
+$ sudo cat /var/lib/dhclient/dhclient.leases
 
 
 Part 2
+Now we will configure dhcpd to supply a reserved address to a specific host on the network.
 
+on centos1
+Get hardware address of eth0
+
+$ ip address
+Make a note
 on centos3
 
-vi /etc/dhcp/dhcpd.conf
+$ sudo vi /etc/dhcp/dhcpd.conf
+
+scroll to host declaration for fantasia
+The address used must be outside of the Dynamic address range
 
 host centos1 {
 	hardware ethernet 52:54:00:60:a8:98;
@@ -26,11 +37,11 @@ host centos1 {
 }
 
 Restart dhcpd
-systemctl restart dhcpd
+$ sudo systemctl restart dhcpd
 
 on centos1
 
-ifdown eth0
-ifup eth0
+$ sudo ifdown eth0
+$ sudo ifup eth0
 
-ifconfig
+$ ip address

@@ -1,21 +1,29 @@
-DHCP
+This lab will have us configure our virtual network to use  DHCP to configure our network settings on the hosts on the network
 
-Dynamic Host Configuration Protocol
+DHCP = Dynamic Host Configuration Protocol
 
-Service to configure network hosts with IP address, Subnetmask
-Default Gateways, DNS etc.
+Service to configure network hosts with IP address, Subnet mask
+Default Gateways, DNS, and other network settings.
 
-Configuration information is leased to a client for a certain period after which if it is not renewed it expires.
+Configuration settings are leased to a client for a certain period after which if it is not renewed it expires.
 
-Much easier way of managing networks and clients than statically configured hosts.
-IP address management, and troubleshooting implications.
-Critically important for protable devices.
+It is a much easier way of managing networks and clients than statically configured hosts.
 
-Static hosts still have place.
+It has benefits for IP address management, and troubleshooting.
+Critically important for portable devices. (laptops,tablets,phones)
+
+Static hosts still have place. Often network hosts that provide servers, Web server, DNS server etc are usually configured statically.
+
+*** Before we proceed with lab 8 it is important that you have submitted all previous labs.
+*** Lab 8 will change some configuration settings that will make the previous lab check scripts fail.
+
+*** Also before starting this lab it is a good idea to perform a yum update and backup all of your VM disk images
 
 In lab 6 we statically configured all of our VM's to connect to the same Virtual Network using fixed addresses.
 
 In this lab we will configure one of our hosts to be a DHCP server to provide configuration to the other VM's
+
+*** Show DHCP.jpg
 
 The initial DHCP lease process consists of 4 BROADCAST packets between the dhcp client and the dhcp servers.
 Discover
@@ -23,15 +31,22 @@ Offer (reserved from available address pools)
 Request
 Acknowledge (lease expiry, and other config)
 
+
 Part 1. Installation
 
 Launch c7host and centos3
 In centos3
-rpm -qa dhcp
-yum install dhcp
-To list files
-rpm -qla dhcp 
-cat /etc/dhcp/dhcp.conf
-cp /usr/share/doc/dhcp*/dhcpd.conf.example /etc/dhcp/dhcpd.conf
 
+$ rpm -qa dhcp
+$ yum install dhcp
 
+To list the files installed by the package:
+
+$ rpm -ql dhcp
+Listing files installed by a package after installing it can be very useful, it will help you to know where various config files are stored as well as other useful files
+
+$ cat /etc/dhcp/dhcp.conf
+
+The file is empty so lets make a copy of the .example file and edit it.
+
+$ cp /usr/share/doc/dhcp*/dhcpd.conf.example /etc/dhcp/dhcpd.conf
